@@ -1,0 +1,15 @@
+[package]
+name = "cuparmesan"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+# concrete-core = {version = "1.0.0-gamma", features=["backend_default", "backend_cuda", "backend_default_parallel"]}
+concrete-core = {path = "../concrete-core/concrete-core", features=["backend_default", "backend_cuda", "backend_default_parallel"]}
+# parmesan = { path = "../parmesan/"}
+colored = "^2.0.0"
+num-bigint = "0.4"
+num-traits = "0.2"
