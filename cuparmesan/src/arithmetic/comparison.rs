@@ -142,6 +142,14 @@ pub fn max(
         params.noise,
         LweCiphertextCount(2 * params.n),
     )?;
+    let d_comp__pi_5 = pbs::comp__pi_5(
+        &mut engines.default_engine,
+        &mut engines.cuda_engine,
+        params.pi,
+        &mut params.param,
+        params.n,
+    )
+    .expect("pbs::comp__pi_5  failed.");
     let d_comp2__pi_5 = pbs::comp2__pi_5(
         &mut engines.default_engine,
         &mut engines.cuda_engine,
@@ -168,14 +176,25 @@ pub fn max(
         engines
             .cuda_engine
             .discard_x_plus_2y_to_local_lwe_ciphertext_vector(&mut d_w, &d_cc, i as u32, d - 1)?;
-        pbs::pbs_k(
-            engines,
-            keys,
-            &mut d_w,
-            &d_comp2__pi_5,
-            d_buffer_lwe,
-            2_i32.pow(i) as usize,
-        )?;
+        if i == 0 {
+            pbs::pbs_k(
+                engines,
+                keys,
+                &mut d_w,
+                &d_comp2__pi_5,
+                d_buffer_lwe,
+                2_i32.pow(i) as usize,
+            )?;
+        } else {
+            pbs::pbs_k(
+                engines,
+                keys,
+                &mut d_w,
+                &d_comp__pi_5,
+                d_buffer_lwe,
+                2_i32.pow(i) as usize,
+            )?;
+        }
         engines
             .cuda_engine
             .discard_copy_from_local_for_sign_lwe_ciphertext_vector(d_cc, &d_w, i as u32, d - 1)?;
