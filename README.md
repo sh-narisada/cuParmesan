@@ -71,7 +71,28 @@ cuParmesan
 
 * Make sure that your machine supports CUDA operations (please check `nvidia-smi` and `nvcc` commands)
 
+### An Example of Homomorphic Operartions
 
+```shell-session
+$ ./target/release/cuparmesan
+Input number A
+15
+Input number B
+6
+Input operation:
+1 : Full Adder
+2 : Full Scalar Multiplier
+3 : Full Multiplier
+4 : Full Multiplier with Parallel Reduction
+5 : Sign
+6 : Comparison
+7 : Max (Relu)
+8 : Inversion (Naive)
+9 : Inversion (Optimized)
+1
+...
+c             =           21 :: PASS (exp. 21)
+```
 
 ### Differences
 
